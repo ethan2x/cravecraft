@@ -2,6 +2,8 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { consumeAiRequest } from "@/lib/ai-usage";
 
 export const runtime = "nodejs";
 
@@ -53,6 +55,40 @@ export async function POST(request: Request) {
         { error: "AI service is not configured." },
         { status: 503 }
       );
+    }
+
+    const admin = createSupabaseAdminClient();
+
+    const { data: subscription, error: subscriptionError } = await admin
+      .from("subscriptions")
+      .select("plan, status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (subscriptionError) {
+      console.error("Subscription lookup failed:", subscriptionError);
+      return NextResponse.json(
+        { error: "Could not verify your subscription. Please try again." },
+        { status: 503 }
+      );
+    }
+
+    const activePlan =
+      subscription &&
+      ["active", "trialing"].includes(subscription.status)
+        ? subscription.plan
+        : "free";
+
+    {
+      const dailyLimit = activePlan === "ai" ? 100 : activePlan === "plus" ? 7 : 5;
+      const allowed = await consumeAiRequest(user.id, dailyLimit);
+
+      if (!allowed) {
+        return NextResponse.json(
+          { error: `You've reached your daily limit of ${dailyLimit} AI requests. Try again tomorrow.` },
+          { status: 429 }
+        );
+      }
     }
 
     const openai = new OpenAI({ apiKey });

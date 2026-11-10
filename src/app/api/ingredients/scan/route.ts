@@ -2,6 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { consumeAiRequest } from "@/lib/ai-usage";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,6 +16,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Please log in to scan a photo." },
         { status: 401 }
+      );
+    }
+
+    const admin = createSupabaseAdminClient();
+
+    const { data: subscription, error: subscriptionError } = await admin
+      .from("subscriptions")
+      .select("plan, status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (subscriptionError) {
+      console.error("Subscription lookup failed:", subscriptionError);
+      return NextResponse.json(
+        { error: "Could not verify subscription. Please try again." },
+        { status: 503 }
+      );
+    }
+
+    if (
+      !subscription ||
+      !["plus", "ai"].includes(subscription.plan) ||
+      !["active", "trialing"].includes(subscription.status)
+    ) {
+      return NextResponse.json(
+        { error: "AI photo scanning requires an active Crave+ or Crave AI subscription." },
+        { status: 403 }
       );
     }
 
@@ -35,6 +64,18 @@ export async function POST(request: NextRequest) {
         { error: "Photo scanning is not configured." },
         { status: 503 }
       );
+    }
+
+    {
+      const dailyLimit = subscription.plan === "ai" ? 100 : 7;
+      const allowed = await consumeAiRequest(user.id, dailyLimit);
+
+      if (!allowed) {
+        return NextResponse.json(
+          { error: "You've reached your daily AI request limit. Try again tomorrow." },
+          { status: 429 }
+        );
+      }
     }
 
     const openai = new OpenAI({
