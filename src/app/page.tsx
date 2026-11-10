@@ -45,6 +45,9 @@ export default async function Home() {
                 <a href="/recipes" className="text-sm text-cream-muted hover:text-cream">
                   Recipes
                 </a>
+                <a href="/fridge-rescue" className="text-sm text-cream-muted hover:text-cream">
+                  Fridge Rescue
+                </a>
                 <ProfileMenu />
               </>
             ) : (
@@ -81,7 +84,7 @@ export default async function Home() {
                 See how it works
               </a>
             </div>
-            <p className="mt-4 text-xs text-cream-muted">Create a free account today. AI recipes and subscriptions are coming soon.</p>
+            <p className="mt-4 text-xs text-cream-muted">Explore 96 recipes across 8 cuisines. Create a free account to get started.</p>
           </div>
 
           {/* Replace with a real photo: put hero.jpg in /public/images and swap this block for <Image> */}
@@ -115,7 +118,7 @@ export default async function Home() {
       <section id="features" className="scroll-mt-20 bg-charcoal-light py-24">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="font-display text-4xl font-semibold">Cooking, built around you</h2>
-          <p className="mt-3 max-w-xl text-cream-muted">We&rsquo;re building tools that teach, not just tell. These features are in development.</p>
+          <p className="mt-3 max-w-xl text-cream-muted">Discover recipes, explore new cuisines, and get cooking assistance tailored to your needs.</p>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="rounded-3xl bg-charcoal-card p-7 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-ember/10">
