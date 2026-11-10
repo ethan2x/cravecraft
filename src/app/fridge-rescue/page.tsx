@@ -23,33 +23,106 @@ export default function RecipesPage() {
   const [ingredients, setIngredients] = useState("");
   const [fridgePhoto, setFridgePhoto] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState("");
+  const [scanning, setScanning] = useState(false);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const uploadInputRef = useRef<HTMLInputElement>(null);
 
   const handleFridgePhoto = (file?: File) => {
-    setPhotoError("");
-    if (!file) return;
+  setPhotoError("");
+  setFridgePhoto(null);
+  if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      setPhotoError("Please choose an image.");
+  if (!file.type.startsWith("image/")) {
+    setPhotoError("Please choose an image.");
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    setPhotoError("Please choose an image smaller than 10 MB.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    if (typeof reader.result !== "string") {
+      setPhotoError("Could not read this photo.");
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      setPhotoError("Please choose an image smaller than 10 MB.");
-      return;
-    }
+    const img = new Image();
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setFridgePhoto(reader.result);
+    img.onload = () => {
+      const maxDimension = 1200;
+      const scale = Math.min(
+        1,
+        maxDimension / Math.max(img.width, img.height)
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        setPhotoError("Could not process this photo.");
+        return;
       }
+
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const compressedPhoto = canvas.toDataURL("image/jpeg", 0.7);
+
+      if (compressedPhoto.length > 2_500_000) {
+        setPhotoError("Photo is still too large. Try another image.");
+        return;
+      }
+
+      setFridgePhoto(compressedPhoto);
     };
-    reader.onerror = () => setPhotoError("Could not read this photo.");
-    reader.readAsDataURL(file);
+
+    img.onerror = () => setPhotoError("Could not process this photo.");
+    img.src = reader.result;
   };
 
+  reader.onerror = () => setPhotoError("Could not read this photo.");
+  reader.readAsDataURL(file);
+};
+
+async function scanFridgePhoto() {
+  if (!fridgePhoto || scanning) return;
+
+  setScanning(true);
+  setPhotoError("");
+
+  try {
+    const response = await fetch("/api/ingredients/scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: fridgePhoto }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Could not scan photo.");
+    }
+
+    if (!Array.isArray(data.ingredients) || data.ingredients.length === 0) {
+      setPhotoError("No ingredients detected. Try another photo.");
+      return;
+    }
+
+    setIngredients(data.ingredients.join(", "));
+  } catch (err) {
+    setPhotoError(
+      err instanceof Error ? err.message : "Photo scanning failed."
+    );
+  } finally {
+    setScanning(false);
+  }
+}
   const [craving, setCraving] = useState("");
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(false);
@@ -167,6 +240,14 @@ export default function RecipesPage() {
 
             {fridgePhoto && (
               <div className="space-y-3">
+<button
+  type="button"
+  onClick={scanFridgePhoto}
+  disabled={scanning}
+  className="w-full rounded-xl bg-ember px-5 py-3 font-semibold text-charcoal transition hover:opacity-90 disabled:opacity-50"
+>
+  {scanning ? "Scanning ingredients..." : "Scan Photo with AI"}
+</button>
                 <img
                   src={fridgePhoto}
                   alt="Selected fridge photo preview"
