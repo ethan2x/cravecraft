@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Camera, ImagePlus } from "lucide-react";
 import Link from "next/link";
 import ProfileMenu from "@/components/profile-menu";
 
@@ -20,6 +21,35 @@ type Recipe = {
 
 export default function RecipesPage() {
   const [ingredients, setIngredients] = useState("");
+  const [fridgePhoto, setFridgePhoto] = useState<string | null>(null);
+  const [photoError, setPhotoError] = useState("");
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const uploadInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFridgePhoto = (file?: File) => {
+    setPhotoError("");
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setPhotoError("Please choose an image.");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setPhotoError("Please choose an image smaller than 10 MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setFridgePhoto(reader.result);
+      }
+    };
+    reader.onerror = () => setPhotoError("Could not read this photo.");
+    reader.readAsDataURL(file);
+  };
+
   const [craving, setCraving] = useState("");
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(false);
@@ -78,6 +108,85 @@ export default function RecipesPage() {
         </p>
 
         <section className="mt-8 space-y-6 rounded-3xl border border-white/10 bg-charcoal-light p-7">
+          <div className="space-y-4">
+            <h2 className="font-semibold">Scan your fridge</h2>
+            <p className="text-sm text-cream-muted">
+              Take a photo or upload one from your device.
+            </p>
+
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              aria-label="Take a fridge photo"
+              onChange={(e) => {
+                handleFridgePhoto(e.target.files?.[0]);
+                e.target.value = "";
+              }}
+            />
+
+            <input
+              ref={uploadInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              aria-label="Upload a fridge photo"
+              onChange={(e) => {
+                handleFridgePhoto(e.target.files?.[0]);
+                e.target.value = "";
+              }}
+            />
+
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => cameraInputRef.current?.click()}
+                className="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-3 font-semibold text-charcoal"
+              >
+                <Camera size={18} />
+                Take Photo
+              </button>
+
+              <button
+                type="button"
+                onClick={() => uploadInputRef.current?.click()}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 font-semibold"
+              >
+                <ImagePlus size={18} />
+                Upload Photo
+              </button>
+            </div>
+
+            {photoError && (
+              <p role="alert" className="text-sm text-red-400">
+                {photoError}
+              </p>
+            )}
+
+            {fridgePhoto && (
+              <div className="space-y-3">
+                <img
+                  src={fridgePhoto}
+                  alt="Selected fridge photo preview"
+                  className="max-h-72 w-full rounded-xl object-contain"
+                />
+                <button
+                  type="button"
+                  onClick={() => setFridgePhoto(null)}
+                  className="text-sm text-cream-muted underline"
+                >
+                  Remove photo
+                </button>
+                <p className="text-sm text-cream-muted">
+                  Photo selected. AI ingredient scanning is coming next.
+                  For now, enter your ingredients below.
+                </p>
+              </div>
+            )}
+          </div>
+
           <div>
             <label htmlFor="ingredients" className="block font-semibold">
               What ingredients do you have?
