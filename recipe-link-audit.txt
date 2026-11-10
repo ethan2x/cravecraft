@@ -1,0 +1,28 @@
+CRAVECRAFT RECIPE LINK AUDIT
+========================================
+Total checked: 96
+Working: 85
+Broken: 8
+Blocked / Unverified: 3
+Invalid format: 0
+
+BROKEN LINKS
+------------------------------
+Chicken Parmesan | https://www.recipetineats.com/chicken-parmesan/ | 404
+Fettuccine Alfredo | https://www.themediterraneandish.com/fettuccine-alfredo/ | 404
+Minestrone Soup | https://www.themediterraneandish.com/minestrone-soup/ | 404
+Pasta Primavera | https://www.themediterraneandish.com/pasta-primavera/ | 404
+Tomato Bruschetta | https://www.themediterraneandish.com/bruschetta-recipe/ | 404
+Buffalo Chicken Wings | https://www.recipetineats.com/buffalo-wings/ | 404
+Classic Grilled Cheese Sandwich | https://www.budgetbytes.com/grilled-cheese/ | 404
+Mediterranean Baked Salmon | https://www.themediterraneandish.com/mediterranean-baked-salmon/ | 404
+
+BLOCKED / UNVERIFIED
+------------------------------
+Korean Beef Bulgogi | https://www.maangchi.com/recipe/bulgogi | 403
+Korean Kimchi Fried Rice | https://www.maangchi.com/recipe/kimchi-bokkeumbap | 403
+Classic Smash Burgers | https://www.seriouseats.com/ultra-smashed-cheeseburger-recipe-food-lab | 403
+
+INVALID URL FORMAT
+------------------------------
+None

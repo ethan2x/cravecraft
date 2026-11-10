@@ -1,0 +1,117 @@
+CRAVECRAFT RECIPE QUALITY AUDIT
+=============================================
+Total recipes: 96
+
+CUISINE COUNTS
+Caribbean: 12
+Mexican: 12
+Southern / Soul Food: 12
+African: 12
+Italian: 12
+Asian: 12
+American: 12
+Mediterranean: 12
+
+ISSUES / REVIEW FLAGS
+Southern/Soul Food: expected 12, found 0
+Unexpected cuisine: Southern / Soul Food (12)
+Rasta Pasta: missing image
+Chicken Fajitas: missing image
+Southern Baked Mac and Cheese: missing image
+Jamaican Rice and Peas: missing image
+Jamaican Curry Chicken: missing image
+Jamaican Beef Patties: missing image
+Jamaican Brown Stew Chicken: missing image
+Jamaican Steamed Cabbage: missing image
+Jamaican Callaloo: missing image
+Jamaican Festival: missing image
+Jamaican Fried Dumplings: missing image
+Jamaican Curry Goat: missing image
+Jamaican Chicken Soup: missing image
+Slow Cooker Brown Stew Chicken: missing image
+Nigerian Jollof Rice: missing image
+Nigerian Amala: missing image
+North African Shakshuka: missing image
+Nigerian Egusi Soup: missing image
+Nigerian Beef Suya: missing image
+West African Fufu: missing image
+West African Rice and Beans: missing image
+Kenyan Pilau: missing image
+Ethiopian Doro Wat: missing image
+Ethiopian Injera: missing image
+South African Chakalaka: missing image
+East African Matoke: missing image
+Southern Collard Greens: missing image
+Caramel Candied Yams: missing image
+Southern Smothered Pork Chops: missing image
+Southern Shrimp and Grits: missing image
+Southern Chicken Fried Chicken: missing image
+Southern Cabbage: missing image
+Southern Black-Eyed Peas: missing image
+Sweet Honey Cornbread: missing image
+Smothered Turkey Wings: missing image
+Slow Cooker Chicken and Gravy: missing image
+Old-Fashioned Southern Peach Cobbler: missing image
+Creamy Tomato and Spinach Pasta: missing image
+Creamy Tuscan Orzo: missing image
+Chicken Parmesan: missing image
+Chicken Parmesan: REVIEW source URL title match: https://www.recipetineats.com/chicken-parmigiana/
+Spaghetti Carbonara: missing image
+Classic Lasagna: missing image
+Spaghetti Bolognese: missing image
+Fettuccine Alfredo: missing image
+Minestrone Soup: missing image
+Pasta Primavera: missing image
+Margherita Pizza: missing image
+Tomato Bruschetta: missing image
+Classic Tiramisu: missing image
+Beef Birria Tacos: missing image
+Chicken Tinga Enchiladas: missing image
+Mexican Rice — Arroz Rojo: missing image
+Carne Asada: missing image
+Salsa Verde: missing image
+Chicken Quesadillas: missing image
+Tres Leches Cake: missing image
+Red Chilaquiles: missing image
+Mexican Street Corn — Elote: missing image
+Pozole Rojo: missing image
+Pozole Rojo: REVIEW source URL title match: https://www.isabeleats.com/red-posole-recipe/
+Homemade Guacamole: missing image
+Japanese Chicken Teriyaki: missing image
+Japanese Chicken Katsu: missing image
+Japanese Miso Soup: missing image
+Chinese Egg Fried Rice: missing image
+Chinese Kung Pao Chicken: missing image
+Chinese Beef and Broccoli: missing image
+Korean Beef Bulgogi: missing image
+Korean Kimchi Fried Rice: missing image
+Thai Pad Thai: missing image
+Thai Green Curry: missing image
+Indian Butter Chicken: missing image
+Indian Chicken Biryani: missing image
+Classic Smash Burgers: missing image
+Buffalo Chicken Wings: missing image
+BBQ Pork Ribs: missing image
+Classic Grilled Cheese Sandwich: missing image
+Classic Beef Chili: missing image
+Classic American Meatloaf: missing image
+Fluffy Buttermilk Pancakes: missing image
+Classic American Apple Pie: missing image
+Slow Cooker Pot Roast: missing image
+New England Clam Chowder: missing image
+Homemade Chicken Pot Pie: missing image
+Chewy Chocolate Chip Cookies: missing image
+Greek Chicken Souvlaki: missing image
+Homemade Hummus: missing image
+Crispy Falafel: missing image
+Chicken Shawarma: missing image
+Chicken Shawarma: REVIEW source URL title match: https://www.recipetineats.com/chicken-sharwama-middle-eastern/
+Traditional Greek Salad: missing image
+Homemade Tzatziki: missing image
+Lebanese Tabbouleh: missing image
+Lebanese Tabbouleh: REVIEW source URL title match: https://www.themediterraneandish.com/tabouli-salad/
+Greek Spanakopita: missing image
+Mediterranean Baked Salmon: missing image
+Baba Ganoush: missing image
+Turkish Menemen: missing image
+Lebanese Mujadara: missing image

@@ -1,0 +1,19 @@
+node_modules
+.next
+out
+.env
+.env*.local
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+.env.local
+.env*.local
+
+# Local environment backups
+.env.local.*
+
+# Local development backups
+*.backup
+*.save

@@ -1,0 +1,21 @@
+CRAVECRAFT FINAL RECIPE AUDIT
+========================================
+Total recipes: 96
+HTTP 200: 93
+Broken / Other Status: 0
+Blocked / Unverified: 3
+Redirects: 0
+
+BROKEN LINKS
+------------------------------
+None
+
+BLOCKED / UNVERIFIED
+------------------------------
+Korean Beef Bulgogi | https://www.maangchi.com/recipe/bulgogi | 403
+Korean Kimchi Fried Rice | https://www.maangchi.com/recipe/kimchi-bokkeumbap | 403
+Classic Smash Burgers | https://www.seriouseats.com/ultra-smashed-cheeseburger-recipe-food-lab | 403
+
+REDIRECTS TO REVIEW
+------------------------------
+None
